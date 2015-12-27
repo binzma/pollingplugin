@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.cordova.com/ns/plugins/1.0"
+           id="ch.maenu.pollingplugin"
+      version="0.1.0">
+    <name>Polling</name>
+    <description>Polling plugin</description>
+    <license>MIT</license>
+    <keywords>cordova,polling</keywords>
+
+
+    <js-module src="www/pollingplugin.js" name="PollingPlugin">
+        <clobbers target="navigator.plugins.polling" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="PollingPlugin">
+                <param name="android-package" value="ch.maenu.pollingplugin.PollingPlugin"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+            <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+            <uses-permission android:name="android.permission.VIBRATE"/>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <receiver android:name="ch.maenu.pollingplugin.PollingReceiver" android:process=":remote">
+            </receiver>
+            <receiver android:name="ch.maenu.pollingplugin.PollingBoot">
+                <intent-filter>
+                    <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                </intent-filter>
+            </receiver>
+        </config-file>
+
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
+            <intent-filter>
+                <action android:name="ch.maenu.pollingplugin.POLLING" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </config-file>
+
+
+
+        <source-file src="src/android/PollingPlugin.java" target-dir="src/ch/maenu/pollingplugin" />
+        <source-file src="src/android/PollingBoot.java" target-dir="src/ch/maenu/pollingplugin" />
+        <source-file src="src/android/PollingReceiver.java" target-dir="src/ch/maenu/pollingplugin" />
+     </platform>          
+</plugin>
