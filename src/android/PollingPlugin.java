@@ -64,7 +64,7 @@ public class PollingPlugin extends CordovaPlugin {
 				AlarmManager alarmMgr = (AlarmManager)(this.cordova.getActivity().getSystemService(Context.ALARM_SERVICE));
 				
 				PendingIntent alarmIntent;     
-				Intent intent = new Intent(this.cordova.getActivity(), AlarmReceiver.class);
+				Intent intent = new Intent(this.cordova.getActivity(), PollingReceiver.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				alarmIntent = PendingIntent.getBroadcast(this.cordova.getActivity(), 0, intent, 0);
 				
