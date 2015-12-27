@@ -23,7 +23,7 @@ public class PollingBoot extends BroadcastReceiver {
             	AlarmManager alarmMgr = (AlarmManager)(context.getSystemService(Context.ALARM_SERVICE));
 				
 				PendingIntent alarmIntent;     
-				Intent intent = new Intent(context, AlarmReceiver.class);
+				Intent intent = new Intent(context, PollingReceiver.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 				

@@ -14,7 +14,7 @@ import android.os.Vibrator;
 public class PollingReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("PollingPlugin", "AlarmReceived");
+        Log.d("PollingPlugin", "PollingEventReceived");
 
         PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
