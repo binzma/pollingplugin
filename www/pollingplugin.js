@@ -6,7 +6,7 @@ var alarm = {
         cordova.exec(
             successCallback,
             errorCallback,
-            "AlarmPlugin",
+            "PollingPlugin",
             "programAlarm",
             [alarmDate]
         );
