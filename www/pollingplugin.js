@@ -1,14 +1,11 @@
 var alarm = {
-    set: function(alarmDate, successCallback, errorCallback) {
-        if(alarmDate < new Date())
-    		return;
-    	
+    set: function(config, successCallback, errorCallback) {
         cordova.exec(
             successCallback,
             errorCallback,
             "PollingPlugin",
             "programAlarm",
-            [alarmDate]
+            [config]
         );
     }
 };
