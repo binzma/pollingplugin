@@ -24,7 +24,7 @@ public class PollingPlugin extends CordovaPlugin {
     /**
      * Interval may not be smaller than 5 minutes
      */
-    private final long MIN_INTERVAL = 5 * 1000;
+    private final long MIN_INTERVAL = 5 * 60 * 1000;
 
 
 	@Override
@@ -139,18 +139,17 @@ public class PollingPlugin extends CordovaPlugin {
 				alarmIntent = PendingIntent.getBroadcast(this.cordova.getActivity(), 0, intent, 0);
 				alarmMgr.cancel(alarmIntent);
 
-//				// alarm interval: (see https://developer.android.com/training/scheduling/alarms.html)
-//                alarmMgr.setInexactRepeating(
-//                        AlarmManager.ELAPSED_REALTIME_WAKEUP,
-//                        interval /* time until first trigger in millis */,
-//                        interval /* interval to trigger again in millis */,
-//                        alarmIntent);
+
+                // power saving mode
 				// alarm interval: (see https://developer.android.com/training/scheduling/alarms.html)
-                alarmMgr.setRepeating(
-                        AlarmManager.RTC_WAKEUP,
-                        System.currentTimeMillis() + interval /* time until first trigger in millis */,
+                alarmMgr.setInexactRepeating(
+                        AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                        interval /* time until first trigger in millis */,
                         interval /* interval to trigger again in millis */,
                         alarmIntent);
+                // exact mode:
+                // TODO: exact alarm scheduling needs one-time alarms that reschedule a new one-time alarm when fired.
+
 
                 callbackContext.success("success: setInterval " + interval + "ms");
 
