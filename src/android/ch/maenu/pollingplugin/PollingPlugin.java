@@ -59,10 +59,11 @@ public class PollingPlugin extends CordovaPlugin {
 
                 // TODO: get settings, add url, commit settings
 
-                callbackContext.success("success: addUrl");
+                callbackContext.success("success: addUrl " + url);
 
+                // TODO: remove vibrator for production
                 Vibrator v = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                v.vibrate(1000);
+                v.vibrate(500);
 
                 return true;
             }
@@ -74,10 +75,11 @@ public class PollingPlugin extends CordovaPlugin {
 
                 // TODO: get settings, remove url, commit settings
 
-                callbackContext.success("success: removeUrl");
+                callbackContext.success("success: removeUrl " + url);
 
+                // TODO: remove vibrator for production
                 Vibrator v = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                v.vibrate(1000);
+                v.vibrate(500);
 
                 return true;
 
@@ -103,8 +105,9 @@ public class PollingPlugin extends CordovaPlugin {
 
                 callbackContext.success("success: deactivate");
 
+                // TODO: remove vibrator for production
                 Vibrator v = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                v.vibrate(1000);
+                v.vibrate(500);
 
                 return true;
             }
@@ -145,8 +148,9 @@ public class PollingPlugin extends CordovaPlugin {
 
                 callbackContext.success("success: setInterval " + interval + "ms");
 
+                // TODO: remove vibrator for production
                 Vibrator v = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                v.vibrate(1000);
+                v.vibrate(500);
 
 				return true;
 			}
