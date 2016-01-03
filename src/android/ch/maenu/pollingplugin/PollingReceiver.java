@@ -27,11 +27,13 @@ public class PollingReceiver extends BroadcastReceiver {
         v.vibrate(1000);
 //        performAction(context);
 
-        intent = new Intent();
-        intent.setAction("ch.maenu.pollingplugin.SCRAPE");
-        intent.setPackage(context.getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+
+//        // Starts the main app (cordova app)
+//        intent = new Intent();
+//        intent.setAction("ch.maenu.pollingplugin.MAIN");
+//        intent.setPackage(context.getPackageName());
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        context.startActivity(intent);
     }
 
 

@@ -41,7 +41,7 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
             <intent-filter>
-                <action android:name="ch.maenu.pollingplugin.SCRAPE" />
+                <action android:name="ch.maenu.pollingplugin.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </config-file>
