@@ -72,7 +72,7 @@ public class PollingReceiver extends BroadcastReceiver {
                 .setAction("ch.maenu.pollingplugin.MAIN")
                 .setPackage(context.getPackageName())
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .putExtra(AlarmReceiver.NOTIFICATION_ID, notificationId);
+                .putExtra(PollingReceiver.NOTIFICATION_ID, notificationId);
         // Create pending intent for onClick
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, onClick, PendingIntent.FLAG_CANCEL_CURRENT);
 
