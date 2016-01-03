@@ -1,16 +1,9 @@
 package ch.maenu.pollingplugin;
 
-import java.text.SimpleDateFormat;
-
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaPlugin;
-import org.json.JSONArray;
-import org.json.JSONException;
-import java.util.Date;
 import android.app.AlarmManager;
 import android.app.KeyguardManager;
-import android.app.PendingIntent;
 import android.app.KeyguardManager.KeyguardLock;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +11,14 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class PollingPlugin extends CordovaPlugin {
@@ -57,23 +58,33 @@ public class PollingPlugin extends CordovaPlugin {
 					return true;
 				}
 
-				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity());
+				SharedPreferences settings = context.getSharedPreferences("uspSettings", Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = settings.edit();
 				// writes the PollingDate to the settings
 				editor.putLong("PollingPlugin.PollingDate", aDate.getTime());
 				// writes the urls to poll to the settings
-				editor.putLong("PollingPlugin.PollingUrls", urls.toString());
+				editor.putString("PollingPlugin.PollingUrls", urls.toString());
 				editor.commit();
 
 				AlarmManager alarmMgr = (AlarmManager)(this.cordova.getActivity().getSystemService(Context.ALARM_SERVICE));
 
-				PendingIntent alarmIntent;
 				Intent intent = new Intent(this.cordova.getActivity(), PollingReceiver.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				alarmIntent = PendingIntent.getBroadcast(this.cordova.getActivity(), 0, intent, 0);
+				// Create the intent, which will be triggered when the alarm goes off
+				PendingIntent alarmIntent;
 
 				alarmMgr.cancel(alarmIntent);
-				alarmMgr.set(AlarmManager.RTC_WAKEUP,  aDate.getTime(), alarmIntent);
+
+//				// set the alarm to be triggered at the specified time
+//				alarmMgr.set(AlarmManager.RTC_WAKEUP,  aDate.getTime(), alarmIntent);
+
+				// alarm interval: (see https://developer.android.com/training/scheduling/alarms.html)
+				alarmMgr.setInexactRepeating(
+						AlarmManager.ELAPSED_REALTIME_WAKEUP,
+						1000 /*trigger first time in millis*/,
+						15 * 60 * 1000 /*interval to trigger again in millis*/,
+						alarmIntent);
 
 				callbackContext.success("Alarm set at: " +sdf.format(aDate));
 				return true;

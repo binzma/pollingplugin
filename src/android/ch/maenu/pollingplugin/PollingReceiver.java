@@ -5,11 +5,19 @@ import android.app.KeyguardManager.KeyguardLock;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.os.SystemClock;
-import android.util.Log;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import org.jsoup.nodes.Document;
+import org.jsoup.Jsoup;
+
 
 public class PollingReceiver extends BroadcastReceiver {
 
@@ -25,7 +33,7 @@ public class PollingReceiver extends BroadcastReceiver {
         KeyguardLock keyguardLock =  keyguardManager.newKeyguardLock("TAG");
         keyguardLock.disableKeyguard();
 
-        performAction();
+        performAction(context);
 
         intent = new Intent();
         intent.setAction("ch.maenu.pollingplugin.ALARM");
@@ -34,15 +42,26 @@ public class PollingReceiver extends BroadcastReceiver {
         context.startActivity(intent);
     }
 
-    private void performAction(){
+    private void performAction(Context context){
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         String urlArrayJson = settings.getString("PollingPlugin.PollingUrls", "[]");
-        JSONArray urlArray = new JSONArray(urlArrayJson);
-        for(var i = 0; i < urlArray.length(); i++){
+
+        JSONArray urlArray;
+
+        try{
+            urlArray = new JSONArray(urlArrayJson);
+        }
+        catch(JSONException e){
+            return;
+        }
+
+        for(int i = 0; i < urlArray.length(); i++){
             pollUrl(urlArray.getString(i));
         }
 
-
         // TODO: do polling and notify if necessary
+
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(2000);
     }
