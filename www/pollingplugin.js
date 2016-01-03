@@ -1,10 +1,37 @@
 var polling = {
-    set: function(config, successCallback, errorCallback) {
+    addUrl: function(config, successCallback, errorCallback) {
         cordova.exec(
             successCallback,
             errorCallback,
             "PollingPlugin",
-            "programAlarm",
+            "addUrl",
+            [config]
+        );
+    },
+    removeUrl: function(config, successCallback, errorCallback) {
+        cordova.exec(
+            successCallback,
+            errorCallback,
+            "PollingPlugin",
+            "removeUrl",
+            [config]
+        );
+    },
+    setInterval: function(config, successCallback, errorCallback) {
+        cordova.exec(
+            successCallback,
+            errorCallback,
+            "PollingPlugin",
+            "setInterval",
+            [config]
+        );
+    },
+    deactivate: function(config, successCallback, errorCallback) {
+        cordova.exec(
+            successCallback,
+            errorCallback,
+            "PollingPlugin",
+            "deactivate",
             [config]
         );
     }
