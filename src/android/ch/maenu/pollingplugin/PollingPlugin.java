@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
 import android.app.PendingIntent;
+import android.content.ClipDescription;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,11 @@ import java.util.Date;
 
 
 public class PollingPlugin extends CordovaPlugin {
+
+    /**
+     * Interval may not be smaller than 5 minutes
+     */
+    private final long MIN_INTERVAL = 5 * 1000;
 
 
 	@Override
@@ -48,24 +54,23 @@ public class PollingPlugin extends CordovaPlugin {
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		try {
 			if ("programAlarm".equals(action)) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
-                // TODO: first arg will in future be the interval, not a date. (int with milliseconds)
-				Date aDate = sdf.parse(args.getString(0).replace("Z", "+0000"));
+                // TODO: first arg will in future be the interval, not a date. (long with milliseconds)
+                long interval = args.getLong(0)
                 // second arg is an array of urls to scrape
 				JSONArray urls = args.getJSONArray(1);
 
-				Date n = new Date();
 
-				if(aDate.before(n)) {
-					callbackContext.error("The date is in the past");
-					return true;
-				}
+                // TODO: uncomment this
+//				if(interval < MIN_INTERVAL) {
+//					callbackContext.error("The interval must be at least " + MIN_INTERVAL);
+//					return true;
+//				}
 
                 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity());
 				SharedPreferences.Editor editor = settings.edit();
 				// writes the PollingDate to the settings
-				editor.putLong("PollingPlugin.PollingDate", aDate.getTime());
+				editor.putLong("PollingPlugin.PollingInterval", interval);
 				// writes the urls to poll to the settings
 				editor.putString("PollingPlugin.PollingUrls", urls.toString());
 				editor.commit();
@@ -85,11 +90,11 @@ public class PollingPlugin extends CordovaPlugin {
 				// alarm interval: (see https://developer.android.com/training/scheduling/alarms.html)
 				alarmMgr.setInexactRepeating(
 						AlarmManager.ELAPSED_REALTIME_WAKEUP,
-						1000 /*trigger first time in millis*/,
-						15 * 60 * 1000 /*interval to trigger again in millis*/,
+                        interval /* time until first trigger in millis */,
+                        interval /* interval to trigger again in millis */,
 						alarmIntent);
 
-				callbackContext.success("Alarm set at: " +sdf.format(aDate));
+				callbackContext.success("Alarm set at: " +sdf.format(interval));
 				return true;
 			}
 			return false;

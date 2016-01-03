@@ -24,7 +24,7 @@ public class PollingBoot extends BroadcastReceiver {
 		// TODO: set intent with interval, not date!
 
 		// reads the PollingDate from the settings
-		long dt = settings.getLong("PollingPlugin.PollingDate", 0);
+		long dt = settings.getLong("PollingPlugin.PollingInterval", 0);
 		long now = (new Date()).getTime();
 
 		if (dt < now) {
