@@ -21,6 +21,8 @@ public class PollingBoot extends BroadcastReceiver {
 
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
 
+		// TODO: set intent with interval, not date!
+
 		// reads the PollingDate from the settings
 		long dt = settings.getLong("PollingPlugin.PollingDate", 0);
 		long now = (new Date()).getTime();

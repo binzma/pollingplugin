@@ -49,8 +49,12 @@ public class PollingPlugin extends CordovaPlugin {
 		try {
 			if ("programAlarm".equals(action)) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+                // TODO: first arg will in future be the interval, not a date. (int with milliseconds)
 				Date aDate = sdf.parse(args.getString(0).replace("Z", "+0000"));
+                // second arg is an array of urls to scrape
 				JSONArray urls = args.getJSONArray(1);
+
 				Date n = new Date();
 
 				if(aDate.before(n)) {
@@ -58,7 +62,7 @@ public class PollingPlugin extends CordovaPlugin {
 					return true;
 				}
 
-				SharedPreferences settings = context.getSharedPreferences("uspSettings", Context.MODE_PRIVATE);
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity());
 				SharedPreferences.Editor editor = settings.edit();
 				// writes the PollingDate to the settings
 				editor.putLong("PollingPlugin.PollingDate", aDate.getTime());
@@ -68,6 +72,7 @@ public class PollingPlugin extends CordovaPlugin {
 
 				AlarmManager alarmMgr = (AlarmManager)(this.cordova.getActivity().getSystemService(Context.ALARM_SERVICE));
 
+				PendingIntent alarmIntent;
 				Intent intent = new Intent(this.cordova.getActivity(), PollingReceiver.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				alarmIntent = PendingIntent.getBroadcast(this.cordova.getActivity(), 0, intent, 0);

@@ -18,6 +18,8 @@ import org.json.JSONException;
 import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
 
+import java.io.IOException;
+
 
 public class PollingReceiver extends BroadcastReceiver {
 
@@ -51,24 +53,26 @@ public class PollingReceiver extends BroadcastReceiver {
 
         try{
             urlArray = new JSONArray(urlArrayJson);
+            for(int i = 0; i < urlArray.length(); i++){
+                pollUrl(urlArray.getString(i), context);
+            }
         }
         catch(JSONException e){
-            return;
+            e.printStackTrace();
         }
+    }
 
-        for(int i = 0; i < urlArray.length(); i++){
-            pollUrl(urlArray.getString(i));
+    private void pollUrl(String url, Context context){
+        Document doc;
+        try {
+            doc  = Jsoup.connect(url).get();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         // TODO: do polling and notify if necessary
 
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(2000);
-    }
-
-    private void pollUrl(String url){
-        Document doc  = Jsoup.connect(url).get();
-
-
     }
 }
