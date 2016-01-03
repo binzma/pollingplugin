@@ -1,4 +1,4 @@
-var alarm = {
+var polling = {
     set: function(config, successCallback, errorCallback) {
         cordova.exec(
             successCallback,
@@ -9,4 +9,4 @@ var alarm = {
         );
     }
 };
-module.exports = alarm;
+module.exports = polling;
