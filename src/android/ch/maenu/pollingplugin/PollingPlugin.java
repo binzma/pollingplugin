@@ -114,9 +114,6 @@ public class PollingPlugin extends CordovaPlugin {
 			if ("setInterval".equals(action)) {
 
                 long interval = args.getLong(0);
-                // second arg is an array of urls to scrape
-				JSONArray urls = args.getJSONArray(1);
-
 
                 // TODO: uncomment this for production
 //				if(interval < MIN_INTERVAL) {
