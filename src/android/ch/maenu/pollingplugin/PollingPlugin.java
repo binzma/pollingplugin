@@ -94,7 +94,7 @@ public class PollingPlugin extends CordovaPlugin {
                         interval /* interval to trigger again in millis */,
 						alarmIntent);
 
-				callbackContext.success("Alarm set at: " +sdf.format(interval));
+				callbackContext.success("Alarm set to repeate every " + interval + " ms");
 				return true;
 			}
 			return false;
