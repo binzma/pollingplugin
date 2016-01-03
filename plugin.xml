@@ -48,8 +48,10 @@
 
 
 
-        <source-file src="src/android/PollingPlugin.java" target-dir="src/ch/maenu/pollingplugin" />
-        <source-file src="src/android/PollingBoot.java" target-dir="src/ch/maenu/pollingplugin" />
-        <source-file src="src/android/PollingReceiver.java" target-dir="src/ch/maenu/pollingplugin" />
+        <source-file src="src/android/ch/maenu/pollingplugin/PollingPlugin.java" target-dir="src/ch/maenu/pollingplugin" />
+        <source-file src="src/android/ch/maenu/pollingplugin/PollingBoot.java" target-dir="src/ch/maenu/pollingplugin" />
+        <source-file src="src/android/ch/maenu/pollingplugin/PollingReceiver.java" target-dir="src/ch/maenu/pollingplugin" />
+		
+		<source-file src="libs/jsoup-1.8.3.jar" target-dir="libs" />
      </platform>          
 </plugin>
