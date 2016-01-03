@@ -32,7 +32,7 @@ public class PollingReceiver extends BroadcastReceiver {
 //        performAction(context);
 
         intent = new Intent();
-        intent.setAction("ch.maenu.pollingplugin.ALARM");
+        intent.setAction("ch.maenu.pollingplugin.SCRAPE");
         intent.setPackage(context.getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
