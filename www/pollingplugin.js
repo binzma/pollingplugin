@@ -26,13 +26,13 @@ var polling = {
             [config]
         );
     },
-    deactivate: function(config, successCallback, errorCallback) {
+    deactivate: function(successCallback, errorCallback) {
         cordova.exec(
             successCallback,
             errorCallback,
             "PollingPlugin",
             "deactivate",
-            [config]
+            []
         );
     }
 };
