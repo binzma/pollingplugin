@@ -1,7 +1,5 @@
 package ch.maenu.pollingplugin;
 
-import java.util.Date;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -19,13 +17,14 @@ public class PollingBoot extends BroadcastReceiver {
 			return;
 		}
 
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-
-		// TODO: set intent with interval, not date!
-
 		// reads the PollingDate from the settings
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
 		long interval = settings.getLong("PollingPlugin.PollingInterval", 0);
 
+		// interval is 0 if deactivated
+		if(interval == 0){
+			return;
+		}
 
 		AlarmManager alarmMgr = (AlarmManager)(context.getSystemService(Context.ALARM_SERVICE));
 
