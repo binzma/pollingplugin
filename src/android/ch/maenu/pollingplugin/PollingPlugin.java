@@ -4,12 +4,12 @@ import android.app.AlarmManager;
 import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
 import android.app.PendingIntent;
-import android.content.ClipDescription;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -17,9 +17,6 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class PollingPlugin extends CordovaPlugin {
@@ -95,6 +92,10 @@ public class PollingPlugin extends CordovaPlugin {
 						alarmIntent);
 
 				callbackContext.success("Alarm set to repeate every " + interval + " ms");
+
+                Vibrator v = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(1000);
+
 				return true;
 			}
 			return false;
