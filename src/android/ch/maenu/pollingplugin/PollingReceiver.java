@@ -13,6 +13,8 @@ public class PollingReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d("PollingPlugin", "PollingEventReceived");
 
+
+//        // removes lock screen and activates screen
 //        PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
 //        WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
 //        wakeLock.acquire();
@@ -22,10 +24,55 @@ public class PollingReceiver extends BroadcastReceiver {
 //        keyguardLock.disableKeyguard();
 
 
+
         // TODO: remove vibrator for production
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(1000);
 //        performAction(context);
+
+
+
+       /*#######################################################################*/
+        /**
+         * NOTIFICATION
+         *
+         * http://developer.android.com/guide/topics/ui/notifiers/notifications.html
+         */
+       /*#######################################################################*/
+//
+//        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+//                        .setSmallIcon(R.drawable.notification_icon)
+//                        .setContentTitle("My notification")
+//                        .setContentText("Hello World!");
+//// Creates an explicit intent for an Activity in your app
+//        Intent resultIntent = new Intent(this, ResultActivity.class);
+//
+//// The stack builder object will contain an artificial back stack for the
+//// started Activity.
+//// This ensures that navigating backward from the Activity leads out of
+//// your application to the Home screen.
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//// Adds the back stack for the Intent (but not the Intent itself)
+//        stackBuilder.addParentStack(ResultActivity.class);
+//// Adds the Intent that starts the Activity to the top of the stack
+//        stackBuilder.addNextIntent(resultIntent);
+//        PendingIntent resultPendingIntent =
+//                stackBuilder.getPendingIntent(
+//                        0,
+//                        PendingIntent.FLAG_UPDATE_CURRENT
+//                );
+//        mBuilder.setContentIntent(resultPendingIntent);
+//        NotificationManager mNotificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//// mId allows you to update the notification later on.
+//        mNotificationManager.notify(mId, mBuilder.build());
+//
+
+
+       /*#######################################################################*/
+
+
+
 
 
 //        // Starts the main app (cordova app)

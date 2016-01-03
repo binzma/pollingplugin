@@ -33,10 +33,17 @@ public class PollingBoot extends BroadcastReceiver {
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
+//		// alarm interval: (see https://developer.android.com/training/scheduling/alarms.html)
+//		alarmMgr.setInexactRepeating(
+//				AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//				interval /* time until first trigger in millis */,
+//				interval /* interval to trigger again in millis */,
+//				alarmIntent);
+
 		// alarm interval: (see https://developer.android.com/training/scheduling/alarms.html)
-		alarmMgr.setInexactRepeating(
-				AlarmManager.ELAPSED_REALTIME_WAKEUP,
-				interval /* time until first trigger in millis */,
+		alarmMgr.setRepeating(
+				AlarmManager.RTC_WAKEUP,
+				System.currentTimeMillis() + interval /* time until first trigger in millis */,
 				interval /* interval to trigger again in millis */,
 				alarmIntent);
 

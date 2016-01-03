@@ -139,10 +139,16 @@ public class PollingPlugin extends CordovaPlugin {
 				alarmIntent = PendingIntent.getBroadcast(this.cordova.getActivity(), 0, intent, 0);
 				alarmMgr.cancel(alarmIntent);
 
+//				// alarm interval: (see https://developer.android.com/training/scheduling/alarms.html)
+//                alarmMgr.setInexactRepeating(
+//                        AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//                        interval /* time until first trigger in millis */,
+//                        interval /* interval to trigger again in millis */,
+//                        alarmIntent);
 				// alarm interval: (see https://developer.android.com/training/scheduling/alarms.html)
-                alarmMgr.setInexactRepeating(
-                        AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                        interval /* time until first trigger in millis */,
+                alarmMgr.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        System.currentTimeMillis() + interval /* time until first trigger in millis */,
                         interval /* interval to trigger again in millis */,
                         alarmIntent);
 
