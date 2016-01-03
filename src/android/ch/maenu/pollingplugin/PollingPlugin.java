@@ -56,7 +56,7 @@ public class PollingPlugin extends CordovaPlugin {
 			if ("programAlarm".equals(action)) {
 
                 // TODO: first arg will in future be the interval, not a date. (long with milliseconds)
-                long interval = args.getLong(0)
+                long interval = args.getLong(0);
                 // second arg is an array of urls to scrape
 				JSONArray urls = args.getJSONArray(1);
 

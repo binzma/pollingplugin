@@ -24,12 +24,8 @@ public class PollingBoot extends BroadcastReceiver {
 		// TODO: set intent with interval, not date!
 
 		// reads the PollingDate from the settings
-		long dt = settings.getLong("PollingPlugin.PollingInterval", 0);
-		long now = (new Date()).getTime();
+		long interval = settings.getLong("PollingPlugin.PollingInterval", 0);
 
-		if (dt < now) {
-			return;
-		}
 
 		AlarmManager alarmMgr = (AlarmManager)(context.getSystemService(Context.ALARM_SERVICE));
 
@@ -38,7 +34,12 @@ public class PollingBoot extends BroadcastReceiver {
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-		alarmMgr.set(AlarmManager.RTC_WAKEUP,  dt, alarmIntent);
+		// alarm interval: (see https://developer.android.com/training/scheduling/alarms.html)
+		alarmMgr.setInexactRepeating(
+				AlarmManager.ELAPSED_REALTIME_WAKEUP,
+				interval /* time until first trigger in millis */,
+				interval /* interval to trigger again in millis */,
+				alarmIntent);
 
 	}
 }
