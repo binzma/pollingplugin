@@ -53,12 +53,12 @@ public class PollingPlugin extends CordovaPlugin {
 			if ("programAlarm".equals(action)) {
 
                 // TODO: first arg will in future be the interval, not a date. (long with milliseconds)
-                long interval = args.getLong(0);
+                long interval = Long.parseLong(args.getString(0));
                 // second arg is an array of urls to scrape
 				JSONArray urls = args.getJSONArray(1);
 
 
-                // TODO: uncomment this
+                // TODO: uncomment this for production
 //				if(interval < MIN_INTERVAL) {
 //					callbackContext.error("The interval must be at least " + MIN_INTERVAL);
 //					return true;
