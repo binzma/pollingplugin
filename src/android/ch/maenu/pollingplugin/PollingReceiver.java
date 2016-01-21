@@ -59,23 +59,21 @@ public class PollingReceiver extends BroadcastReceiver {
 
         // Prepare intent which is triggered if the
         // notification is selected
-        Intent intent = new Intent(this, NotificationReceiverActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+//        Intent intent = new Intent(this, NotificationReceiverActivity.class);
+
+        PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
 
         // Build notification
         // Actions are just fake
-        Notification noti = new Notification.Builder(this)
+        Notification notification = new Notification.Builder(context)
                 .setContentTitle("New mail from " + "test@gmail.com")
-                .setContentText("Subject").setSmallIcon(R.drawable.icon)
-                .setContentIntent(pIntent)
-                .addAction(R.drawable.icon, "Call", pIntent)
-                .addAction(R.drawable.icon, "More", pIntent)
-                .addAction(R.drawable.icon, "And more", pIntent).build();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        // hide the notification after its selected
-        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+                .setContentIntent(pIntent).build();
 
-        notificationManager.notify(0, noti);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        // hide the notification after its selected
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        notificationManager.notify(0, notification);
 
 
        /*#######################################################################*/
