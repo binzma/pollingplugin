@@ -109,6 +109,13 @@ public class PollingPlugin extends CordovaPlugin {
                 Vibrator v = (Vibrator) this.cordova.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(500);
 
+
+                /**********************************************************/
+
+
+
+                /**********************************************************/
+
                 return true;
             }
 
