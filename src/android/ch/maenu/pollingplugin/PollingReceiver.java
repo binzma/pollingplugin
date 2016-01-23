@@ -57,23 +57,23 @@ public class PollingReceiver extends BroadcastReceiver {
        /*#######################################################################*/
 
 
-        // Prepare intent which is triggered if the
-        // notification is selected
-//        Intent intent = new Intent(this, NotificationReceiverActivity.class);
-
-        PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
-
-        // Build notification
-        // Actions are just fake
-        Notification notification = new Notification.Builder(context)
-                .setContentTitle("New mail from " + "test@gmail.com")
-                .setContentIntent(pIntent).build();
-
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        // hide the notification after its selected
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-        notificationManager.notify(0, notification);
+//        // Prepare intent which is triggered if the
+//        // notification is selected
+////        Intent intent = new Intent(this, NotificationReceiverActivity.class);
+//
+//        PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
+//
+//        // Build notification
+//        // Actions are just fake
+//        Notification notification = new Notification.Builder(context)
+//                .setContentTitle("USP test notification!")
+//                .setContentIntent(pIntent).build();
+//
+//        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//        // hide the notification after its selected
+//        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+//
+//        notificationManager.notify(0, notification);
 
 
        /*#######################################################################*/
