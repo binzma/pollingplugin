@@ -22,7 +22,7 @@ public class PollingReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent pIntent) {
         Log.d("PollingPlugin", "PollingEventReceived");
 
-        notify(context);
+        notifyCourse(context, "Kurs XYZ (test)", "Du kannst dich nun anmelden!");
 
 //        performAction(context);
 
@@ -30,7 +30,9 @@ public class PollingReceiver extends BroadcastReceiver {
 
     }
 
-    private void notify(Context context){
+
+
+    private void notifyCourse(Context context, String title, String message){
 
         // Starts the main app (cordova app)
         Intent intent = new Intent(context, ch.unisport.MainActivity.class);
@@ -47,12 +49,15 @@ public class PollingReceiver extends BroadcastReceiver {
         Bitmap bMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.screen);
 
         Notification noti = new Notification.Builder(context)
-                .setContentTitle("Kurs XYZ (test)")
-                .setContentText("Du kannst dich nun anmelden!")
+                .setContentTitle(title)
+                .setContentText(message)
                 .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(bMap)
                 .setAutoCancel(true)
-                .setVibrate(new long[] {0, 600, 200, 200})
+                .setVibrate(new long[] {0,
+                        500, 100,
+                        100, 100,
+                        100})
                 .setContentIntent(startCordovaApp)
                 .build();
 
