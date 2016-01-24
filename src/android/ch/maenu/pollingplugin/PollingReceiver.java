@@ -2,6 +2,7 @@ package ch.maenu.pollingplugin;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,8 +19,27 @@ public class PollingReceiver extends BroadcastReceiver {
 
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, Intent pIntent) {
         Log.d("PollingPlugin", "PollingEventReceived");
+
+        notify(context);
+
+//        performAction(context);
+
+
+
+    }
+
+    private void notify(Context context){
+
+        // Starts the main app (cordova app)
+        Intent intent = new Intent(context, ch.unisport.MainActivity.class);
+        intent.setAction("android.intent.action.MAIN");
+        intent.setPackage("ch.unisport");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        PendingIntent startCordovaApp = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
 
         // bitmap http://stackoverflow.com/questions/11182714/bitmapfactory-example
 
@@ -27,42 +47,20 @@ public class PollingReceiver extends BroadcastReceiver {
         Bitmap bMap = BitmapFactory.decodeResource(context.getResources(), R.drawable.screen);
 
         Notification noti = new Notification.Builder(context)
-                .setContentTitle("Kurs XYZ")
+                .setContentTitle("Kurs XYZ (test)")
                 .setContentText("Du kannst dich nun anmelden!")
                 .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(bMap)
+                .setAutoCancel(true)
+                .setVibrate(new long[] {0, 600, 200, 200})
+                .setContentIntent(startCordovaApp)
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         notificationManager.notify(9999, noti);
 
-
-
-        Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        int dot = 300;
-        int short_gap = 200;
-        long[] pattern = {
-                0,  // Start immediately
-                300, 200, 300
-        };
-
-        // Only perform this pattern one time (-1 means "do not repeat")
-        v.vibrate(pattern, -1);
-
-
-//        performAction(context);
-
-
-
-
-
-//        // Starts the main app (cordova app)
-//        intent = new Intent();
-//        intent.setAction("ch.maenu.pollingplugin.MAIN");
-//        intent.setPackage(context.getPackageName());
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        context.startActivity(intent);
     }
+
 
 
 //    private void performAction(Context context){
